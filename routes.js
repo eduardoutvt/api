@@ -3,11 +3,11 @@ const router = express.Router();
 const connection = require('./db');
 
 // Obtener todos los usuarios
-router.get('/usuarios', (req, res) => {
-    connection.query('SELECT * FROM usuarios', (err, results) => {
+router.get('/mediciones', (req, res) => {
+    connection.query('SELECT * FROM mediciones', (err, results) => {
         if (err) {
-            console.error('Error al obtener usuarios:', err);
-            res.status(500).json({ error: 'Error al obtener usuarios' });
+            console.error('Error al obtener la mediciones:', err);
+            res.status(500).json({ error: 'Error al obtener mediciones' });
             return;
         }
         res.json(results);
