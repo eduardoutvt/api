@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const connection = require('./db');
 
-// Obtener todos los usuarios
+// Obtener todas las mediciones
 router.get('/mediciones', (req, res) => {
     connection.query('SELECT * FROM mediciones', (err, results) => {
         if (err) {
-            console.error('Error al obtener la mediciones:', err);
+            console.error('Error al obtener las mediciones:', err);
             res.status(500).json({ error: 'Error al obtener mediciones' });
             return;
         }
@@ -14,60 +14,60 @@ router.get('/mediciones', (req, res) => {
     });
 });
 
-// Obtener un usuario por su ID
-router.get('/usuarios/:id', (req, res) => {
+// Obtener una medición por su ID
+router.get('/mediciones/:id', (req, res) => {
     const id = req.params.id;
-    connection.query('SELECT * FROM usuarios WHERE id = ?', id, (err, results) => {
+    connection.query('SELECT * FROM mediciones WHERE id = ?', id, (err, results) => {
         if (err) {
-            console.error('Error al obtener el usuario', err);
-            res.status(500).json({ error: 'Error al obtener el usuario' });
+            console.error('Error al obtener la medición', err);
+            res.status(500).json({ error: 'Error al obtener la medición' });
             return;
         }
         if (results.length === 0) {
-            res.status(404).json({ error: 'Usuario no encontrado' });
+            res.status(404).json({ error: 'Medición no encontrada' });
             return;
         }
         res.json(results[0]);
     });
 });
 
-// Crear un nuevo usuario
-router.post('/usuarios', (req, res) => {
-    const nuevoUsuario = req.body;
-    connection.query('INSERT INTO usuarios SET ?', nuevoUsuario, (err, results) => {
+// Crear una nueva medición
+router.post('/mediciones', (req, res) => {
+    const nuevaMedicion = req.body;
+    connection.query('INSERT INTO mediciones SET ?', nuevaMedicion, (err, results) => {
         if (err) {
-            console.error('Error al crear un nuevo usuario:', err);
-            res.status(500).json({ error: 'Error al crear un nuevo usuario' });
+            console.error('Error al crear una nueva medición:', err);
+            res.status(500).json({ error: 'Error al crear una nueva medición' });
             return;
         }
-        res.status(201).json({ message: 'Usuario creado exitosamente' });
+        res.status(201).json({ message: 'Medición creada exitosamente' });
     });
 });
 
-// Actualizar un usuario por su ID
-router.put('/usuarios/:id', (req, res) => {
+// Actualizar una medición por su ID
+router.put('/mediciones/:id', (req, res) => {
     const id = req.params.id;
     const datosActualizados = req.body;
-    connection.query('UPDATE usuarios SET ? WHERE id = ?', [datosActualizados, id], (err, results) => {
+    connection.query('UPDATE mediciones SET ? WHERE id = ?', [datosActualizados, id], (err, results) => {
         if (err) {
-            console.error('Error al actualizar el usuario:', err);
-            res.status(500).json({ error: 'Error al actualizar el usuario' });
+            console.error('Error al actualizar la medición:', err);
+            res.status(500).json({ error: 'Error al actualizar la medición' });
             return;
         }
-        res.json({ message: 'Usuario actualizado exitosamente' });
+        res.json({ message: 'Medición actualizada exitosamente' });
     });
 });
 
-// Eliminar un usuario por su ID
-router.delete('/usuarios/:id', (req, res) => {
+// Eliminar una medición por su ID
+router.delete('/mediciones/:id', (req, res) => {
     const id = req.params.id;
-    connection.query('DELETE FROM usuarios WHERE id = ?', id, (err, results) => {
+    connection.query('DELETE FROM mediciones WHERE id = ?', id, (err, results) => {
         if (err) {
-            console.error('Error al eliminar el usuario:', err);
-            res.status(500).json({ error: 'Error al eliminar el usuario' });
+            console.error('Error al eliminar la medición:', err);
+            res.status(500).json({ error: 'Error al eliminar la medición' });
             return;
         }
-        res.json({ message: 'Usuario eliminado exitosamente' });
+        res.json({ message: 'Medición eliminada exitosamente' });
     });
 });
 
